@@ -1,0 +1,21 @@
+PATH := .:$(PATH)
+
+.PHONY: bootstrap
+bootstrap:
+	./.bootstrap.sh
+	buildout
+
+.PHONY: buildout
+buildout:
+	./bin/buildout -N
+
+restart: stop start
+
+.PHONY: stop
+stop:
+	../../bin/supervisorctl stop varnish
+
+.PHONY: start
+start:
+	../../bin/supervisorctl start varnish
+	sleep 30
